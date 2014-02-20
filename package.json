@@ -1,0 +1,25 @@
+{
+  "name": "grunt-bosonic",
+  "version": "0.1.0",
+  "description": "> A Grunt task that transpiles to-the-spec Web Components into polyfilled JavaScript",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bosonic/grunt-bosonic.git"
+  },
+  "author": "Raphaël Rougeron <goldoraf@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bosonic/grunt-bosonic/issues"
+  },
+  "dependencies": {
+    "bosonic-transpiler": "~0.1.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0"
+  }
+}
