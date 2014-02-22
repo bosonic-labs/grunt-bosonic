@@ -19,6 +19,9 @@ module.exports = function(grunt) {
         this.filesSrc.forEach(function(filepath) {
             var fileDir = path.dirname(filepath),
                 transpiled = transpiler(grunt.file.read(filepath));
+            transpiled.stylesheets.forEach(function(href) {
+                css.push(grunt.file.read(fileDir + '/' + href));
+            });
             css.push(transpiled.css);
             transpiled.scripts.forEach(function(src) {
                 js.push(grunt.file.read(fileDir + '/' + src));
