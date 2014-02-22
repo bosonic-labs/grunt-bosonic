@@ -8,7 +8,8 @@
 
 'use strict';
 
-var transpiler = require('bosonic-transpiler');
+var path = require('path'),
+    transpiler = require('bosonic-transpiler');
 
 module.exports = function(grunt) {
 
@@ -16,8 +17,12 @@ module.exports = function(grunt) {
         var css = [], js = [];
         
         this.filesSrc.forEach(function(filepath) {
-            var transpiled = transpiler(grunt.file.read(filepath));
+            var fileDir = path.dirname(filepath),
+                transpiled = transpiler(grunt.file.read(filepath));
             css.push(transpiled.css);
+            transpiled.scripts.forEach(function(src) {
+                js.push(grunt.file.read(fileDir + '/' + src));
+            });
             js.push(transpiled.js);
         });
 
