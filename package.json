@@ -16,10 +16,13 @@
     "url": "https://github.com/bosonic/grunt-bosonic/issues"
   },
   "dependencies": {
-    "bosonic-transpiler": "~0.3.0"
+    "bosonic-transpiler": "0.3.*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-clean": "~0.5.0"
+  },
+  "peerDependencies": {
+    "grunt": "0.4.x"
   }
 }
