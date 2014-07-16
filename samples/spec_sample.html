@@ -4,6 +4,11 @@
     <span id="sep">:</span>
     <span id="mm"></span>
   </template>
+  <style>
+    :host {
+      border: 1px solid #ccc;
+    }
+  </style>
   <script>
     function start() {
       this.tick();
@@ -17,9 +22,7 @@
     }
 
     ({
-      readyCallback: function () {
-        this._root = this.createShadowRoot();
-        this._root.appendChild(this.template.content.cloneNode());
+      createdCallback: function() {
         if (this.parentElement) {
           start.call(this);
         }
@@ -28,10 +31,10 @@
       removedCallback: stop,
       tick: function () {
         var now = new Date();
-        this._root.querySelector('hh').textContent = fmt(now.getHours());
-        this._root.querySelector('sep').style.visibility =
+        this.shadowRoot.querySelector('#hh').textContent = fmt(now.getHours());
+        this.shadowRoot.querySelector('#sep').style.visibility =
             now.getSeconds() % 2 ? 'visible' : 'hidden';
-        this._root.querySelector('mm').textContent = fmt(now.getMinutes());
+        this.shadowRoot.querySelector('#mm').textContent = fmt(now.getMinutes());
       }
     });
   </script>

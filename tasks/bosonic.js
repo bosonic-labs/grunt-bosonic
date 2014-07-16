@@ -14,26 +14,41 @@ var path = require('path'),
 module.exports = function(grunt) {
 
     grunt.registerMultiTask('bosonic', 'A Grunt task that transpiles to-the-spec Web Components into polyfilled JavaScript', function() {
-        var css = [], js = [];
         
-        this.filesSrc.forEach(function(filepath) {
-            var fileDir = path.dirname(filepath),
-                transpiled = transpiler.transpile(grunt.file.read(filepath));
-            transpiled.stylesheets.forEach(function(href) {
-                css.push(grunt.file.read(fileDir + '/' + href));
+        this.files.forEach(function(f) {
+            f.src.filter(function(filepath) {
+                if (!grunt.file.exists(filepath)) {
+                    grunt.log.warn('Source file "' + filepath + '" not found.');
+                    return false;
+                } else {
+                    return true;
+                }
+            }).map(function(filepath) {
+                if (grunt.file.isDir(filepath)) {
+                    return;
+                }
+                var basename = path.basename(filepath, '.html'),
+                    src = grunt.file.read(filepath),
+                    dest = {
+                        html: f.dest + basename + '.html',
+                        jsx: f.dest + basename + '.jsx',
+                        css: f.dest + basename + '.css'
+                    },
+                    transpiled = {
+                        html: transpiler.transpile(src, { automaticTemplating: true, wrap: true }),
+                        react: transpiler.transpileToReact(src)
+                    };
+
+                grunt.file.write(dest.html, transpiled.html);
+                grunt.log.writeln('File ' + dest.html + ' created.');
+
+                grunt.file.write(dest.jsx, transpiled.react.jsx);
+                grunt.log.writeln('File ' + dest.jsx + ' created.');
+
+                grunt.file.write(dest.css, transpiled.react.css);
+                grunt.log.writeln('File ' + dest.css + ' created.');
             });
-            css.push(transpiled.css);
-            transpiled.scripts.forEach(function(src) {
-                js.push(grunt.file.read(fileDir + '/' + src));
-            });
-            js.push(transpiled.js);
         });
-
-        var jsFile = this.data.js,
-            cssFile = this.data.css;
-
-        grunt.file.write(jsFile, js.join("\n"));
-        grunt.file.write(cssFile, css.join("\n"));
     });
 
 }

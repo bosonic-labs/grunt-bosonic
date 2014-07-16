@@ -19,8 +19,7 @@ module.exports = function(grunt) {
     bosonic: {
       sample: {
         src: ['samples/spec_sample.html'],
-        css: 'tmp/spec_sample.css',
-        js:  'tmp/spec_sample.js'
+        dest: 'tmp/'
       }
     }
 
