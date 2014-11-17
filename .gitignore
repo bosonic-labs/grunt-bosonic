@@ -1,3 +1,9 @@
+# Dependencies
 node_modules/*
-tmp/*
 
+# Editors config folders
+.idea
+.DS_Store
+
+// Project things
+tmp/*
