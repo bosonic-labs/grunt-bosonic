@@ -7,7 +7,3 @@ node_modules/*
 
 // Project things
 tmp/*
-
-# Others
-sauce.json
-C:\\nppdf32Log\\debuglog.txt
